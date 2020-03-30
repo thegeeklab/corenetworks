@@ -1,5 +1,5 @@
 local PythonVersion(pyversion='2.7') = {
-  name: 'python' + std.strReplace(pyversion, '.', '') + '-ansible',
+  name: 'python' + std.strReplace(pyversion, '.', ''),
   image: 'python:' + pyversion,
   environment: {
     PY_COLORS: 1,
@@ -67,7 +67,7 @@ local PipelineTest = {
     },
   ],
   depends_on: [
-    'dependencies',
+    'lint',
   ],
   trigger: {
     ref: ['refs/heads/master', 'refs/tags/**', 'refs/pull/**'],
@@ -232,9 +232,6 @@ local PipelineDocs = {
   ],
   depends_on: [
     'build-package',
-    'build-container-amd64',
-    'build-container-arm64',
-    'build-container-arm',
   ],
   trigger: {
     ref: ['refs/heads/master', 'refs/tags/**'],

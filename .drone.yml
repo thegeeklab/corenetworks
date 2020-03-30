@@ -31,7 +31,7 @@ platform:
   arch: amd64
 
 steps:
-- name: python27-ansible
+- name: python27
   image: python:2.7
   commands:
   - pip install -r test-requirements.txt -qq
@@ -42,7 +42,7 @@ steps:
   depends_on:
   - clone
 
-- name: python35-ansible
+- name: python35
   image: python:3.5
   commands:
   - pip install -r test-requirements.txt -qq
@@ -53,7 +53,7 @@ steps:
   depends_on:
   - clone
 
-- name: python36-ansible
+- name: python36
   image: python:3.6
   commands:
   - pip install -r test-requirements.txt -qq
@@ -64,7 +64,7 @@ steps:
   depends_on:
   - clone
 
-- name: python37-ansible
+- name: python37
   image: python:3.7
   commands:
   - pip install -r test-requirements.txt -qq
@@ -75,7 +75,7 @@ steps:
   depends_on:
   - clone
 
-- name: python38-ansible
+- name: python38
   image: python:3.8
   commands:
   - pip install -r test-requirements.txt -qq
@@ -103,7 +103,7 @@ trigger:
   - refs/pull/**
 
 depends_on:
-- dependencies
+- lint
 
 ---
 kind: pipeline
@@ -260,9 +260,6 @@ trigger:
 
 depends_on:
 - build-package
-- build-container-amd64
-- build-container-arm64
-- build-container-arm
 
 ---
 kind: pipeline
@@ -303,6 +300,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: e0cd32befb8e01ec9cb6bd0e7bc032fe0816bcda9e16d89f37789a7db9ba9b82
+hmac: 4e001299fba8e9facecdb33b8892f3eb45d30334f47bb4babf9e78d9bcd90d09
 
 ...
