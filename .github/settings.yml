@@ -1,7 +1,7 @@
 ---
 repository:
   name: corenetworks
-  description: Python library for the https://core-networks.de DNS API
+  description: Python library for the core-networks.de DNS API
   homepage: https://corenetworks.geekdocs.de
   topics: corenetworks, api, dns, python
 
