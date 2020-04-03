@@ -12,7 +12,7 @@ flake8-quotes
 pep8-naming
 pytest
 pytest-mock
-pytest-cov
-bandit
+pytest-covbandit
+requests-mock
 autopep8
 yapf
