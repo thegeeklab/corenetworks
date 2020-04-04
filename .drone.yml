@@ -36,7 +36,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest --cov=corenetworks/ --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -47,7 +47,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest --cov=corenetworks/ --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -58,7 +58,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest --cov=corenetworks/ --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -69,7 +69,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest --cov=corenetworks/ --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -80,7 +80,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest --cov=corenetworks/ --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -95,6 +95,12 @@ steps:
     CODECOV_TOKEN:
       from_secret: codecov_token
     PY_COLORS: 1
+  depends_on:
+  - python27
+  - python35
+  - python36
+  - python37
+  - python38
 
 trigger:
   ref:
@@ -300,6 +306,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 1c1321bb7ec81e3b3ab86c012406d5631543d49b35a9a95211abe227250228c0
+hmac: 0ac85b54a6ded93501f7b752a640e7a0fffc7bca700473c850d767d2cc5dda87
 
 ...

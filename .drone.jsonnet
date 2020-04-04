@@ -7,7 +7,7 @@ local PythonVersion(pyversion='2.7') = {
   commands: [
     'pip install -r test-requirements.txt -qq',
     'pip install -qq .',
-    'pytest --cov=corenetworks --no-cov-on-fail',
+    'pytest --cov=corenetworks/ --no-cov-on-fail',
   ],
   depends_on: [
     'clone',
@@ -63,6 +63,13 @@ local PipelineTest = {
       commands: [
         'pip install codecov',
         'codecov --required',
+      ],
+      depends_on: [
+        'python27',
+        'python35',
+        'python36',
+        'python37',
+        'python38',
       ],
     },
   ],
