@@ -1,0 +1,6 @@
+---
+main:
+  - name: Setup
+    ref: "/setup"
+  - name: Usage
+    ref: "/usage"

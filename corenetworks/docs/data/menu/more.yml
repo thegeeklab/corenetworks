@@ -1,0 +1,10 @@
+---
+more:
+  - name: Releases
+    ref: "https://github.com/xoxys/corenetworks/releases"
+    external: true
+    icon: "download"
+  - name: "View Source"
+    ref: "https://github.com/xoxys/corenetworks"
+    external: true
+    icon: "github"
