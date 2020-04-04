@@ -47,6 +47,52 @@ class CoreNetworks():
             },
         }
 
+        self._filter_schema = {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "anyOf": [{
+                        "type": "string",
+                    }, {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                    }],
+                },
+                "ttl": {
+                    "anyOf": [{
+                        "type": "number",
+                    }, {
+                        "type": "array",
+                        "items": {
+                            "type": "number"
+                        },
+                    }],
+                },
+                "type": {
+                    "anyOf": [{
+                        "type": "string",
+                    }, {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                    }],
+                },
+                "data": {
+                    "anyOf": [{
+                        "type": "string",
+                    }, {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                    }],
+                },
+            },
+        }
+
         if api_token:
             self._auth = CoreNetworksTokenAuth(api_token)
         else:
@@ -57,7 +103,7 @@ class CoreNetworks():
 
     # RECORDS
 
-    def records(self, zone, data={}):
+    def records(self, zone, params={}):
         """
         Get the list of records for the specific domain.
 
@@ -74,10 +120,10 @@ class CoreNetworks():
             list: List of entry dicts.
 
         """
-        schema = copy.deepcopy(self._schema)
-        self.__validate(data, schema)
+        schema = copy.deepcopy(self._filter_schema)
+        self.__validate(params, schema)
 
-        filter_string = self.__json_to_filter(data)
+        filter_string = self.__json_to_filter(params)
         result = self.__rest_helper(
             "/dnszones/{zone}/records/{filter}".format(zone=zone, filter=filter_string),
             method="GET"
@@ -85,7 +131,7 @@ class CoreNetworks():
 
         return self.__normalize(result)
 
-    def add_record(self, zone, data):
+    def add_record(self, zone, params):
         """
         Create a record for the given domain.
 
@@ -99,15 +145,17 @@ class CoreNetworks():
         """
         schema = copy.deepcopy(self._schema)
         schema["required"] = ["name", "type", "data"]
-        self.__validate(data, schema)
+        self.__validate(params, schema)
 
-        result = self.__rest_helper(
-            "/dnszones/{zone}/records/".format(zone=zone), data=data, method="POST"
+        self.__rest_helper(
+            "/dnszones/{zone}/records/".format(zone=zone), data=params, method="POST"
         )
+
+        result = self.records(zone=zone, params=params)
 
         return self.__normalize(result)
 
-    def delete_record(self, zone, data):
+    def delete_record(self, zone, params):
         """
         Delete all DNS records of a zone that match the data.
 
@@ -116,7 +164,7 @@ class CoreNetworks():
         """
         schema = copy.deepcopy(self._schema)
         schema["properties"]["force_all"] = {"type": "boolean"}
-        schema["oneOf"] = [{
+        schema["anyOf"] = [{
             "required": ["name"]
         }, {
             "required": ["type"]
@@ -125,18 +173,18 @@ class CoreNetworks():
         }, {
             "required": ["force_all"]
         }]
-        self.__validate(data, schema)
+        self.__validate(params, schema)
 
-        if data.get("force_all"):
-            data = {}
+        if params.get("force_all"):
+            params = {}
 
-        print(data)
+        print(params)
 
-        # result = self.__rest_helper(
-        #     "/dnszones/{zone}/records/delete/".format(zone=zone), data=data, method="POST"
-        # )
+        result = self.__rest_helper(
+            "/dnszones/{zone}/records/delete/".format(zone=zone), data=params, method="POST"
+        )
 
-        # return self.__normalize(result)
+        return self.__normalize(result)
 
     def __rest_helper(self, url, data=None, params=None, method="GET"):
         """Handle requests to the Core Networks API."""
@@ -211,7 +259,7 @@ class CoreNetworks():
             if isinstance(value, list):
                 for item in value:
                     filter_list.append("{key}[]={value}".format(key=key, value=item))
-            elif isinstance(value, str):
+            elif isinstance(value, str) or isinstance(value, int):
                 filter_list.append("{key}={value}".format(key=key, value=value))
             else:
                 raise CorenetworksError("Unknown type: {}".format(type(value)))
