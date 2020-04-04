@@ -36,7 +36,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks/tests/ --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -47,7 +47,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks/tests/ --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -58,7 +58,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks/tests/ --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -69,7 +69,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks/tests/ --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -80,7 +80,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks/tests/ --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -297,9 +297,5 @@ trigger:
 
 depends_on:
 - docs
-
----
-kind: signature
-hmac: 4e001299fba8e9facecdb33b8892f3eb45d30334f47bb4babf9e78d9bcd90d09
 
 ...

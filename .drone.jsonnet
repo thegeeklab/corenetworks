@@ -7,7 +7,7 @@ local PythonVersion(pyversion='2.7') = {
   commands: [
     'pip install -r test-requirements.txt -qq',
     'pip install -qq .',
-    'pytest corenetworks/tests/ --cov=corenetworks/ --no-cov-on-fail',
+    'pytest --cov=corenetworks --no-cov-on-fail',
   ],
   depends_on: [
     'clone',
