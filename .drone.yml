@@ -298,4 +298,8 @@ trigger:
 depends_on:
 - docs
 
+---
+kind: signature
+hmac: 1c1321bb7ec81e3b3ab86c012406d5631543d49b35a9a95211abe227250228c0
+
 ...
