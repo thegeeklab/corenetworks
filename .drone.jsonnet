@@ -7,7 +7,7 @@ local PythonVersion(pyversion='2.7') = {
   commands: [
     'pip install -r test-requirements.txt -qq',
     'pip install -qq .',
-    'pytest --cov=corenetworks/ --no-cov-on-fail',
+    'pytest --cov=corenetworks --no-cov-on-fail',
   ],
   depends_on: [
     'clone',
@@ -55,11 +55,15 @@ local PipelineTest = {
     PythonVersion(pyversion='3.8'),
     {
       name: 'codecov',
-      image: 'plugins/codecov',
-      settings: {
-        token: { from_secret: 'codecov_token' },
-        required: true,
+      image: 'python:3.8',
+      environment: {
+        PY_COLORS: 1,
+        CODECOV_TOKEN: { from_secret: 'codecov_token' },
       },
+      commands: [
+        'pip install codecov -qq',
+        'codecov --required -X gcov',
+      ],
       depends_on: [
         'python27',
         'python35',

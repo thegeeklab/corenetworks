@@ -36,7 +36,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -47,7 +47,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -58,7 +58,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -69,7 +69,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -80,18 +80,21 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks/ --no-cov-on-fail
+  - pytest --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
   - clone
 
 - name: codecov
-  image: plugins/codecov
-  settings:
-    required: true
-    token:
+  image: python:3.8
+  commands:
+  - pip install codecov -qq
+  - codecov --required -X gcov
+  environment:
+    CODECOV_TOKEN:
       from_secret: codecov_token
+    PY_COLORS: 1
   depends_on:
   - python27
   - python35
@@ -303,6 +306,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: d201c1b56b91f50f5992cdbdfbde2d32829dd4cac836b697933d1b0876316153
+hmac: 168f1459ba1a231a59ac9439dc7d93f97c3c3abc45d741d40cfff61e9bd0a0d0
 
 ...
