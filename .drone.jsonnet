@@ -55,15 +55,11 @@ local PipelineTest = {
     PythonVersion(pyversion='3.8'),
     {
       name: 'codecov',
-      image: 'python:3.8',
-      environment: {
-        PY_COLORS: 1,
-        CODECOV_TOKEN: { from_secret: 'codecov_token' },
+      image: 'plugins/codecov',
+      settings: {
+        token: { from_secret: 'codecov_token' },
+        required: true,
       },
-      commands: [
-        'pip install codecov',
-        'codecov --required',
-      ],
       depends_on: [
         'python27',
         'python35',

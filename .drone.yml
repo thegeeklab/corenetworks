@@ -87,14 +87,11 @@ steps:
   - clone
 
 - name: codecov
-  image: python:3.8
-  commands:
-  - pip install codecov
-  - codecov --required
-  environment:
-    CODECOV_TOKEN:
+  image: plugins/codecov
+  settings:
+    required: true
+    token:
       from_secret: codecov_token
-    PY_COLORS: 1
   depends_on:
   - python27
   - python35
@@ -306,6 +303,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 0ac85b54a6ded93501f7b752a640e7a0fffc7bca700473c850d767d2cc5dda87
+hmac: d201c1b56b91f50f5992cdbdfbde2d32829dd4cac836b697933d1b0876316153
 
 ...
