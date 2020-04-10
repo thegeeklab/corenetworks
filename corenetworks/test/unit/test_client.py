@@ -7,8 +7,8 @@ from six.moves.urllib.parse import unquote  # noqa
 from corenetworks import CoreNetworks
 from corenetworks.exceptions import CorenetworksError
 from corenetworks.exceptions import ValidationError
-from corenetworks.tests.fixtures.callback import records_get_callback
-from corenetworks.tests.fixtures.callback import records_post_callback
+from corenetworks.test.fixtures.callback import records_get_callback
+from corenetworks.test.fixtures.callback import records_post_callback
 
 
 @pytest.fixture
