@@ -7,7 +7,7 @@ local PythonVersion(pyversion='2.7') = {
   commands: [
     'pip install -r test-requirements.txt -qq',
     'pip install -qq .',
-    'pytest --cov=corenetworks --no-cov-on-fail',
+    'pytest corenetworks --cov=corenetworks --no-cov-on-fail',
   ],
   depends_on: [
     'clone',
@@ -98,7 +98,7 @@ local PipelineSecurity = {
       commands: [
         'pip install -r test-requirements.txt -qq',
         'pip install -qq .',
-        'bandit -r ./corenetworks -x ./corenetworks/tests',
+        'bandit -r ./corenetworks -x ./corenetworks/test',
       ],
     },
   ],

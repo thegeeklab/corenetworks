@@ -9,10 +9,10 @@ flake8-logging-format
 flake8-polyfill
 flake8-quotes
 pep8-naming
+wheel
 pytest
 pytest-mock
 pytest-cov
 bandit
 requests-mock
-autopep8
 yapf

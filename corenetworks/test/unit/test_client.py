@@ -6,6 +6,7 @@ from six.moves.urllib.parse import unquote  # noqa
 
 from corenetworks import CoreNetworks
 from corenetworks.exceptions import CorenetworksError
+from corenetworks.exceptions import ValidationError
 from corenetworks.tests.fixtures.callback import records_get_callback
 from corenetworks.tests.fixtures.callback import records_post_callback
 
@@ -81,3 +82,39 @@ def test_add_record(requests_mock, client):
         }
     )
     assert resp == [{"type": "A", "ttl": 1800, "name": "test", "data": "127.0.0.1"}]
+
+
+def test_delete_record(requests_mock, client):
+    requests_mock.post(
+        "https://beta.api.core-networks.de/dnszones/example.com/records/delete",
+        text=records_post_callback,
+    )
+
+    filtered = client.delete_record(zone="example.com", params={
+        "type": "A",
+    })
+    assert filtered == []
+
+    forced = client.delete_record(zone="example.com", params={
+        "force_all": True,
+    })
+    assert forced == []
+
+
+def test_delete_record_invalid(requests_mock, client):
+    requests_mock.post(
+        "https://beta.api.core-networks.de/dnszones/example.com/records/delete",
+        text=records_post_callback,
+    )
+
+    with pytest.raises(ValidationError) as wrong:
+        assert client.delete_record(zone="example.com", params={"wrong": "attr"})
+    assert str(wrong.value).startswith("Dataset invalid:")
+
+    with pytest.raises(ValidationError) as ntype:
+        assert client.delete_record(zone="example.com", params={"type": 1})
+    assert str(ntype.value).startswith("Dataset invalid:")
+
+    with pytest.raises(ValidationError) as empty:
+        assert client.delete_record(zone="example.com", params={})
+    assert str(empty.value).startswith("Dataset invalid:")

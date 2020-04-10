@@ -39,7 +39,7 @@ setup(
     license=get_property("__license__", PACKAGE_NAME),
     long_description=get_readme(),
     long_description_content_type="text/markdown",
-    packages=find_packages(exclude=["*.tests", "tests", "tests.*"]),
+    packages=find_packages(exclude=["*.test", "test", "test.*"]),
     include_package_data=True,
     zip_safe=False,
     python_requires=">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,<4",
@@ -61,5 +61,5 @@ setup(
     ],
     install_requires=["six", "jsonschema"],
     dependency_links=[],
-    test_suite="tests",
+    test_suite="test",
 )

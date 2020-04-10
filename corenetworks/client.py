@@ -23,7 +23,7 @@ from .exceptions import ValidationError
 class CoreNetworks():
     """Create authenticated API client."""
 
-    def __init__(self, user=None, password=None, api_token=None):
+    def __init__(self, user=None, password=None, api_token=None, auto_commit=False):
         self.__endpoint = "https://beta.api.core-networks.de"
         self.__user_agent = "Core Networks Python API {version}".format(
             version=corenetworks.__version__
@@ -117,7 +117,7 @@ class CoreNetworks():
                 Example: params={"type": ["NS", "SOA"]} will result in filter=?type[]=NS&type[]=SOA
 
         Returns:
-            list: List of entry dicts.
+            list: List of matching records.
 
         """
         schema = copy.deepcopy(self._filter_schema)
@@ -136,11 +136,12 @@ class CoreNetworks():
         Create a record for the given domain.
 
         Args:
-            param1: The first parameter.
-            param2: The second parameter.
+            zone (str): Name of the target DNS zone.
+            params (dict): Dictionary of record parameters.
+                See https://beta.api.core-networks.de/doc/#functon_dnszones_records_add
 
         Returns:
-            True if successful, False otherwise.
+            list: List of added records.
 
         """
         schema = copy.deepcopy(self._schema)
@@ -160,6 +161,12 @@ class CoreNetworks():
         Delete all DNS records of a zone that match the data.
 
         Args:
+            zone (str): Name of the target DNS zone.
+            params (dict): Dictionary of record parameters.
+                See https://beta.api.core-networks.de/doc/#functon_dnszones_records_add
+
+        Returns:
+            list: List of removed records.
 
         """
         schema = copy.deepcopy(self._schema)
@@ -178,10 +185,8 @@ class CoreNetworks():
         if params.get("force_all"):
             params = {}
 
-        print(params)
-
         result = self.__rest_helper(
-            "/dnszones/{zone}/records/delete/".format(zone=zone), data=params, method="POST"
+            "/dnszones/{zone}/records/delete".format(zone=zone), data=params, method="POST"
         )
 
         return self.__normalize(result)

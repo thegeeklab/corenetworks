@@ -36,7 +36,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -47,7 +47,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -58,7 +58,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -69,7 +69,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -80,7 +80,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - pytest --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -125,7 +125,7 @@ steps:
   commands:
   - pip install -r test-requirements.txt -qq
   - pip install -qq .
-  - bandit -r ./corenetworks -x ./corenetworks/tests
+  - bandit -r ./corenetworks -x ./corenetworks/test
   environment:
     PY_COLORS: 1
 
@@ -306,6 +306,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: d81d3b26c9f5d2a75eb6805c47d74217383771d3787bcf8de50eeb0987e1f6ff
+hmac: dd83d3ebb552aa3998d4868389b730635039fba3c34040c53c380bc6ff2587e4
 
 ...
