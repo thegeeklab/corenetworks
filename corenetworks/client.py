@@ -252,7 +252,7 @@ class CoreNetworks():
                 ),
                 payload=e
             )
-        except ConnectionError as e:
+        except ConnectionError:
             raise
 
         if handle.status_code == 200:

@@ -56,7 +56,7 @@ class CoreNetworksBasicAuth(AuthBase):
                 ),
                 payload=e
             )
-        except ConnectionError as e:
+        except ConnectionError:
             raise
 
         response = handle.json()
