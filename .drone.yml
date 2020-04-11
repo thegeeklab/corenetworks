@@ -10,7 +10,7 @@ steps:
 - name: flake8
   image: python:3.8
   commands:
-  - pip install -r test-requirements.txt -qq
+  - pip install -r dev-requirements.txt -qq
   - pip install -qq .
   - flake8 ./corenetworks
   environment:
@@ -34,7 +34,7 @@ steps:
 - name: python27
   image: python:2.7
   commands:
-  - pip install -r test-requirements.txt -qq
+  - pip install -r dev-requirements.txt -qq
   - pip install -qq .
   - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
@@ -45,7 +45,7 @@ steps:
 - name: python35
   image: python:3.5
   commands:
-  - pip install -r test-requirements.txt -qq
+  - pip install -r dev-requirements.txt -qq
   - pip install -qq .
   - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
@@ -56,7 +56,7 @@ steps:
 - name: python36
   image: python:3.6
   commands:
-  - pip install -r test-requirements.txt -qq
+  - pip install -r dev-requirements.txt -qq
   - pip install -qq .
   - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
@@ -67,7 +67,7 @@ steps:
 - name: python37
   image: python:3.7
   commands:
-  - pip install -r test-requirements.txt -qq
+  - pip install -r dev-requirements.txt -qq
   - pip install -qq .
   - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
@@ -78,7 +78,7 @@ steps:
 - name: python38
   image: python:3.8
   commands:
-  - pip install -r test-requirements.txt -qq
+  - pip install -r dev-requirements.txt -qq
   - pip install -qq .
   - pytest corenetworks --cov=corenetworks --no-cov-on-fail
   environment:
@@ -123,7 +123,7 @@ steps:
 - name: bandit
   image: python:3.8
   commands:
-  - pip install -r test-requirements.txt -qq
+  - pip install -r dev-requirements.txt -qq
   - pip install -qq .
   - bandit -r ./corenetworks -x ./corenetworks/test
   environment:
@@ -306,6 +306,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: dd83d3ebb552aa3998d4868389b730635039fba3c34040c53c380bc6ff2587e4
+hmac: 39dee08847508a70f012e80d78c1d2e79fd37f9307b8bca4a8aeaa2d59c68645
 
 ...

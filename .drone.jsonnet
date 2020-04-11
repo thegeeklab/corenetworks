@@ -5,7 +5,7 @@ local PythonVersion(pyversion='2.7') = {
     PY_COLORS: 1,
   },
   commands: [
-    'pip install -r test-requirements.txt -qq',
+    'pip install -r dev-requirements.txt -qq',
     'pip install -qq .',
     'pytest corenetworks --cov=corenetworks --no-cov-on-fail',
   ],
@@ -29,7 +29,7 @@ local PipelineLint = {
         PY_COLORS: 1,
       },
       commands: [
-        'pip install -r test-requirements.txt -qq',
+        'pip install -r dev-requirements.txt -qq',
         'pip install -qq .',
         'flake8 ./corenetworks',
       ],
@@ -96,7 +96,7 @@ local PipelineSecurity = {
         PY_COLORS: 1,
       },
       commands: [
-        'pip install -r test-requirements.txt -qq',
+        'pip install -r dev-requirements.txt -qq',
         'pip install -qq .',
         'bandit -r ./corenetworks -x ./corenetworks/test',
       ],
