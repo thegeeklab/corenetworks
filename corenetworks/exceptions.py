@@ -5,12 +5,9 @@
 class CoreNetworksException(Exception):
     """The main exception class."""
 
-    def __init__(self, message, payload=None):
-        self.message = message
+    def __init__(self, msg, payload=None):
+        super(CoreNetworksException, self).__init__(msg)
         self.payload = payload
-
-    def __str__(self):  # noqa
-        return str(self.message)
 
 
 class CorenetworksError(CoreNetworksException):

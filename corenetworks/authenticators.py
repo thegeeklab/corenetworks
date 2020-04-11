@@ -10,7 +10,6 @@ from requests import Session
 from requests.auth import AuthBase
 
 from .exceptions import AuthError
-from .exceptions import CorenetworksError
 
 
 class CoreNetworksBasicAuth(AuthBase):
@@ -50,10 +49,6 @@ class CoreNetworksBasicAuth(AuthBase):
             session = Session()
             handle = session.send(prepared_request)
             handle.raise_for_status()
-        except ConnectionError as e:
-            raise CorenetworksError(
-                "Server unreachable: {reason}".format(reason=e.message.reason), payload=e
-            )
         except HTTPError as e:
             raise AuthError(
                 "Login failed: {code} {reason}".format(
@@ -61,6 +56,8 @@ class CoreNetworksBasicAuth(AuthBase):
                 ),
                 payload=e
             )
+        except ConnectionError as e:
+            raise
 
         response = handle.json()
 

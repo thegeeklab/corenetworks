@@ -2,6 +2,7 @@
 
 import json
 
+from requests import ConnectionError
 from six.moves.urllib.parse import parse_qs  # noqa
 from six.moves.urllib.parse import unquote  # noqa
 
@@ -19,9 +20,12 @@ def records_get_callback(request, context):
         "data": "::1"
     }]
 
-    if "missing.com" in request.path:
+    if "missing" in request.path:
         context.status_code = 404
         return "[]"
+
+    if "dict" in request.path:
+        return "{}"
 
     query_raw = parse_qs(request.query)
     if query_raw:
@@ -35,3 +39,7 @@ def records_get_callback(request, context):
 
 def records_post_callback(request, context):
     return "[]"
+
+
+def records_error_callback(request, context):
+    raise ConnectionError

@@ -1,21 +1,42 @@
 """Test client class."""
 
 import pytest
+import requests
 from six.moves.urllib.parse import parse_qs  # noqa
 from six.moves.urllib.parse import unquote  # noqa
 
 from corenetworks import CoreNetworks
+from corenetworks.authenticators import CoreNetworksBasicAuth
+from corenetworks.exceptions import AuthError
 from corenetworks.exceptions import CorenetworksError
 from corenetworks.exceptions import ValidationError
+from corenetworks.test.fixtures.callback import records_error_callback
 from corenetworks.test.fixtures.callback import records_get_callback
 from corenetworks.test.fixtures.callback import records_post_callback
 
 
 @pytest.fixture
 def client(mocker):
-    client = CoreNetworks(api_token="secure")
+    mocker.patch.object(CoreNetworksBasicAuth, "_login", return_value="testtoken")
+    client = CoreNetworks(user="testuser", password="testpass")
 
     return client
+
+
+def test_auth_error():
+    with pytest.raises(AuthError) as e:
+        assert CoreNetworks(user="test")
+    assert str(e.value) == "Insufficient authentication details provided"
+
+
+def test_request_error(requests_mock, client):
+    requests_mock.post(
+        "https://beta.api.core-networks.de/dnszones/example.com/records/commit",
+        text=records_error_callback,
+    )
+
+    with pytest.raises(requests.ConnectionError):
+        assert client.commit(zone="example.com")
 
 
 def test_records(requests_mock, client):
@@ -44,13 +65,24 @@ def test_records(requests_mock, client):
 def test_no_records(requests_mock, client):
 
     requests_mock.get(
-        "https://beta.api.core-networks.de/dnszones/missing.com/records/",
+        "https://beta.api.core-networks.de/dnszones/missing/records/",
         text=records_get_callback,
     )
 
     with pytest.raises(CorenetworksError) as e:
-        assert client.records(zone="missing.com")
+        assert client.records(zone="missing")
     assert str(e.value) == "Invalid response: 404 None"
+
+
+def test_type_records(requests_mock, client):
+
+    requests_mock.get(
+        "https://beta.api.core-networks.de/dnszones/dict/records/",
+        text=records_get_callback,
+    )
+
+    dictresp = client.records(zone="dict")
+    assert dictresp == {}
 
 
 def test_filter_records(requests_mock, client):
@@ -118,3 +150,13 @@ def test_delete_record_invalid(requests_mock, client):
     with pytest.raises(ValidationError) as empty:
         assert client.delete_record(zone="example.com", params={})
     assert str(empty.value).startswith("Dataset invalid:")
+
+
+def test_commit(requests_mock, client):
+    requests_mock.post(
+        "https://beta.api.core-networks.de/dnszones/example.com/records/commit",
+        text=records_post_callback,
+    )
+
+    resp = client.commit(zone="example.com")
+    assert resp == []

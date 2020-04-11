@@ -166,7 +166,7 @@ class CoreNetworks():
                 See https://beta.api.core-networks.de/doc/#functon_dnszones_records_add
 
         Returns:
-            list: List of removed records.
+            list: Empty list.
 
         """
         schema = copy.deepcopy(self._schema)
@@ -187,6 +187,23 @@ class CoreNetworks():
 
         result = self.__rest_helper(
             "/dnszones/{zone}/records/delete".format(zone=zone), data=params, method="POST"
+        )
+
+        return self.__normalize(result)
+
+    def commit(self, zone):
+        """
+        Commit changed records to the given DNS zone.
+
+        Args:
+            zone (str): Name of the target DNS zone.
+
+        Returns:
+            list: Empty list.
+
+        """
+        result = self.__rest_helper(
+            "/dnszones/{zone}/records/commit".format(zone=zone), method="POST"
         )
 
         return self.__normalize(result)
@@ -228,10 +245,6 @@ class CoreNetworks():
             handle = session.send(request)
 
             handle.raise_for_status()
-        except ConnectionError as e:
-            raise CorenetworksError(
-                "Server unreachable: {reason}".format(reason=e.message.reason), payload=e
-            )
         except HTTPError as e:
             raise CorenetworksError(
                 "Invalid response: {code} {reason}".format(
@@ -239,6 +252,8 @@ class CoreNetworks():
                 ),
                 payload=e
             )
+        except ConnectionError as e:
+            raise
 
         if handle.status_code == 200:
             response = handle.json()
