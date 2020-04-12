@@ -23,7 +23,7 @@ def client(mocker):
     return client
 
 
-def test_auth_error():
+def test_auth_error(requests_mock):
     with pytest.raises(AuthError) as e:
         assert CoreNetworks(user="test")
     assert str(e.value) == "Insufficient authentication details provided"
@@ -135,7 +135,7 @@ def test_add_record(requests_mock, client, mocker):
     assert resp == [{"type": "A", "ttl": 1800, "name": "test", "data": "127.0.0.1"}]
 
     mocker.patch.object(client, "commit")
-    client.auto_commit = True
+    client.config["auto_commit"] = True
     client.add_record(zone="example.com", params=record)
     client.commit.assert_called_once_with(zone="example.com")
 
@@ -157,7 +157,7 @@ def test_delete_record(requests_mock, client, mocker):
     assert forced == []
 
     mocker.patch.object(client, "commit")
-    client.auto_commit = True
+    client.config["auto_commit"] = True
     client.delete_record(zone="example.com", params={
         "type": "A",
     })

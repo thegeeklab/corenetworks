@@ -3,6 +3,8 @@
 
 import copy
 import json
+import os
+from collections import defaultdict
 
 import jsonschema
 from requests import ConnectionError
@@ -23,12 +25,12 @@ from .exceptions import ValidationError
 class CoreNetworks():
     """Create authenticated API client."""
 
-    def __init__(self, user=None, password=None, api_token=None, auto_commit=False):
+    def __init__(self, user=None, password=None, api_token=None, auto_commit=None):
         self.__endpoint = "https://beta.api.core-networks.de"
         self.__user_agent = "Core Networks Python API {version}".format(
             version=corenetworks.__version__
         )
-        self.auto_commit = auto_commit
+        self.config = self._config(user, password, api_token, auto_commit)
 
         self._schema = {
             "type": "object",
@@ -94,13 +96,35 @@ class CoreNetworks():
             },
         }
 
-        if api_token:
+        if self.config["api_token"]:
             self._auth = CoreNetworksTokenAuth(api_token)
         else:
-            if not user or not password:
-                raise AuthError("Insufficient authentication details provided")
-
             self._auth = CoreNetworksBasicAuth(user, password, self.__endpoint)
+
+    @staticmethod
+    def _config(user, password, api_token, auto_commit):
+        cfg = defaultdict(
+            dict, {
+                "user": None,
+                "password": None,
+                "api_token": None,
+                "auto_commit": False
+            }
+        )
+
+        cfg["user"] = os.getenv("CN_API_USER")
+        cfg["password"] = os.getenv("CN_API_PASSWORD")
+        cfg["api_token"] = os.getenv("CN_API_TOKEN")
+
+        cfg["user"] = user or cfg["user"]
+        cfg["password"] = password or cfg["password"]
+        cfg["api_token"] = api_token or cfg["api_token"]
+        cfg["auto_commit"] = auto_commit or cfg["auto_commit"]
+
+        if not (cfg["user"] and cfg["password"]) and not cfg["api_token"]:
+            raise AuthError("Insufficient authentication details provided")
+
+        return cfg
 
     # ZONES
 
@@ -186,7 +210,7 @@ class CoreNetworks():
 
         result = self.records(zone=zone, params=params)
 
-        if self.auto_commit:
+        if self.config["auto_commit"]:
             self.commit(zone=zone)
 
         return self.__normalize(result)
@@ -224,7 +248,7 @@ class CoreNetworks():
             "/dnszones/{zone}/records/delete".format(zone=zone), data=params, method="POST"
         )
 
-        if self.auto_commit:
+        if self.config["auto_commit"]:
             self.commit(zone=zone)
 
         return self.__normalize(result)
