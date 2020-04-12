@@ -137,7 +137,7 @@ def test_add_record(requests_mock, client, mocker):
     mocker.patch.object(client, "commit")
     client.auto_commit = True
     client.add_record(zone="example.com", params=record)
-    client.commit.assert_called_once()
+    client.commit.assert_called()
 
 
 def test_delete_record(requests_mock, client, mocker):
@@ -161,7 +161,7 @@ def test_delete_record(requests_mock, client, mocker):
     client.delete_record(zone="example.com", params={
         "type": "A",
     })
-    client.commit.assert_called_once()
+    client.commit.assert_called()
 
 
 def test_delete_record_invalid(requests_mock, client):
