@@ -39,6 +39,31 @@ def test_request_error(requests_mock, client):
         assert client.commit(zone="example.com")
 
 
+def test_zones(requests_mock, client):
+    requests_mock.get(
+        "https://beta.api.core-networks.de/dnszones/",
+        text='[{"name":"example.com","type":"master"}]'
+    )
+
+    resp = client.zones()
+    assert resp == [{"name": "example.com", "type": "master"}]
+
+
+def test_zone(requests_mock, client):
+    requests_mock.get(
+        "https://beta.api.core-networks.de/dnszones/example.com",
+        json={
+            "active": True,
+            "dnssec": True,
+            "name": "example.com",
+            "type": "master"
+        }
+    )
+
+    resp = client.zone("example.com")
+    assert resp == {"active": True, "dnssec": True, "name": "example.com", "type": "master"}
+
+
 def test_records(requests_mock, client):
     requests_mock.get(
         "https://beta.api.core-networks.de/dnszones/example.com/records/",
@@ -58,7 +83,6 @@ def test_records(requests_mock, client):
     }]
 
     resp = client.records(zone="example.com")
-
     assert resp == exp
 
 
@@ -95,7 +119,7 @@ def test_filter_records(requests_mock, client):
     assert resp == [{"type": "A", "ttl": 1800, "name": "test", "data": "127.0.0.1"}]
 
 
-def test_add_record(requests_mock, client):
+def test_add_record(requests_mock, client, mocker):
     requests_mock.post(
         "https://beta.api.core-networks.de/dnszones/example.com/records/",
         text=records_post_callback,
@@ -105,18 +129,18 @@ def test_add_record(requests_mock, client):
         text=records_get_callback,
     )
 
-    resp = client.add_record(
-        zone="example.com", params={
-            "type": "A",
-            "ttl": 1800,
-            "name": "test",
-            "data": "127.0.0.1"
-        }
-    )
+    record = {"type": "A", "ttl": 1800, "name": "test", "data": "127.0.0.1"}
+
+    resp = client.add_record(zone="example.com", params=record)
     assert resp == [{"type": "A", "ttl": 1800, "name": "test", "data": "127.0.0.1"}]
 
+    mocker.patch.object(client, "commit")
+    client.auto_commit = True
+    client.add_record(zone="example.com", params=record)
+    client.commit.assert_called_once()
 
-def test_delete_record(requests_mock, client):
+
+def test_delete_record(requests_mock, client, mocker):
     requests_mock.post(
         "https://beta.api.core-networks.de/dnszones/example.com/records/delete",
         text=records_post_callback,
@@ -131,6 +155,13 @@ def test_delete_record(requests_mock, client):
         "force_all": True,
     })
     assert forced == []
+
+    mocker.patch.object(client, "commit")
+    client.auto_commit = True
+    client.delete_record(zone="example.com", params={
+        "type": "A",
+    })
+    client.commit.assert_called_once()
 
 
 def test_delete_record_invalid(requests_mock, client):

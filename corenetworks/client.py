@@ -28,6 +28,7 @@ class CoreNetworks():
         self.__user_agent = "Core Networks Python API {version}".format(
             version=corenetworks.__version__
         )
+        self.auto_commit = auto_commit
 
         self._schema = {
             "type": "object",
@@ -101,6 +102,37 @@ class CoreNetworks():
 
             self._auth = CoreNetworksBasicAuth(user, password, self.__endpoint)
 
+    # ZONES
+
+    def zones(self):
+        """
+        Get the list of DNS zones.
+
+        Args: None
+
+        Returns:
+            list: List of zones.
+
+        """
+        result = self.__rest_helper("/dnszones/", method="GET")
+
+        return self.__normalize(result)
+
+    def zone(self, zone):
+        """
+        Get details about a DNS zone.
+
+        Args:
+            zone (str): Name of the target DNS zone.
+
+        Returns:
+            list: List of zones.
+
+        """
+        result = self.__rest_helper("/dnszones/{zone}".format(zone=zone), method="GET")
+
+        return self.__normalize(result)
+
     # RECORDS
 
     def records(self, zone, params={}):
@@ -154,6 +186,9 @@ class CoreNetworks():
 
         result = self.records(zone=zone, params=params)
 
+        if self.auto_commit:
+            self.commit(zone=zone)
+
         return self.__normalize(result)
 
     def delete_record(self, zone, params):
@@ -188,6 +223,9 @@ class CoreNetworks():
         result = self.__rest_helper(
             "/dnszones/{zone}/records/delete".format(zone=zone), data=params, method="POST"
         )
+
+        if self.auto_commit:
+            self.commit(zone=zone)
 
         return self.__normalize(result)
 
