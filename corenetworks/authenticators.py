@@ -13,7 +13,7 @@ from .exceptions import AuthError
 
 
 class CoreNetworksBasicAuth(AuthBase):
-    """Define token based auth."""
+    """Define login based auth."""
 
     def __init__(self, user, password, endpoint):
         self.user = user
