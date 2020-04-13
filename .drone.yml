@@ -211,6 +211,7 @@ steps:
 - name: generate
   image: python:3.8
   commands:
+  - pip install -r dev-requirements.txt -qq
   - make doc
 
 - name: test
@@ -305,6 +306,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 6acc4879e65978ae67d1bb8d625f0227cabac334980ee22acdb9f4933d0e4459
+hmac: bfc2834ca02c31c299b1f63c967430cb59fc79ca55de8a74b2cf7184b0da715f
 
 ...

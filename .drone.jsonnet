@@ -186,6 +186,7 @@ local PipelineDocs = {
       name: 'generate',
       image: 'python:3.8',
       commands: [
+        'pip install -r dev-requirements.txt -qq',
         'make doc',
       ],
     },
