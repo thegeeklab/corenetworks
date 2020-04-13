@@ -18,3 +18,4 @@ pytest-cov
 bandit
 requests-mock
 yapf
+pydoc-markdown
