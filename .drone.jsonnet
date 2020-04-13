@@ -183,11 +183,10 @@ local PipelineDocs = {
   },
   steps: [
     {
-      name: 'assets',
-      image: 'byrnedo/alpine-curl',
+      name: 'generate',
+      image: 'python:3.8',
       commands: [
-        'mkdir -p docs/themes/hugo-geekdoc/',
-        'curl -sSL https://github.com/xoxys/hugo-geekdoc/releases/latest/download/hugo-geekdoc.tar.gz | tar -xz -C docs/themes/hugo-geekdoc/ --strip-components=1',
+        'make doc',
       ],
     },
     {

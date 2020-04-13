@@ -208,11 +208,10 @@ concurrency:
   limit: 1
 
 steps:
-- name: assets
-  image: byrnedo/alpine-curl
+- name: generate
+  image: python:3.8
   commands:
-  - mkdir -p docs/themes/hugo-geekdoc/
-  - curl -sSL https://github.com/xoxys/hugo-geekdoc/releases/latest/download/hugo-geekdoc.tar.gz | tar -xz -C docs/themes/hugo-geekdoc/ --strip-components=1
+  - make doc
 
 - name: test
   image: klakegg/hugo:0.59.1-ext-alpine
@@ -306,6 +305,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 39dee08847508a70f012e80d78c1d2e79fd37f9307b8bca4a8aeaa2d59c68645
+hmac: 6acc4879e65978ae67d1bb8d625f0227cabac334980ee22acdb9f4933d0e4459
 
 ...
