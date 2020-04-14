@@ -212,6 +212,7 @@ steps:
   image: python:3.8
   commands:
   - pip install -r dev-requirements.txt -qq
+  - pip install -qq .
   - make doc
 
 - name: test
@@ -306,6 +307,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: a8fa81069f019d873f20bec815688759f4f862a962141dc8ec872f5abc8cadeb
+hmac: 781460b587be9a823d27129d03b5dd9c1ec5db7f72241192e65f226366bff486
 
 ...
