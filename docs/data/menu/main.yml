@@ -2,5 +2,11 @@
 main:
   - name: Setup
     ref: "/setup"
-  - name: Usage
-    ref: "/usage"
+  - name: API
+    sub:
+      - name: corenetworks.authenticators
+        ref: "/api/corenetworks/authenticators"
+      - name: corenetworks.client
+        ref: "/api/corenetworks/client"
+      - name: corenetworks.exceptions
+        ref: "/api/corenetworks/exceptions"
