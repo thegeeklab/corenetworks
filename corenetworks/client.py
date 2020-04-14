@@ -170,7 +170,8 @@ class CoreNetworks():
                 but keep in mind that you have to pass a dict not a string. The required
                 filter string will be created automatically.
 
-                Example: params={"type": ["NS", "SOA"]} will result in filter=?type[]=NS&type[]=SOA
+                Example: `params={"type": ["NS", "SOA"]}` will result in
+                `filter=?type[]=NS&type[]=SOA`
 
         Returns:
             list: List of matching records.
