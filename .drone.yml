@@ -215,7 +215,7 @@ steps:
   - make doc
 
 - name: test
-  image: klakegg/hugo:0.59.1-ext-alpine
+  image: klakegg/hugo:0.69.0-ext-alpine
   commands:
   - cd docs/ && hugo-official
 
@@ -306,6 +306,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: bfc2834ca02c31c299b1f63c967430cb59fc79ca55de8a74b2cf7184b0da715f
+hmac: a8fa81069f019d873f20bec815688759f4f862a962141dc8ec872f5abc8cadeb
 
 ...

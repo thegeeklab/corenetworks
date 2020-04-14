@@ -192,7 +192,7 @@ local PipelineDocs = {
     },
     {
       name: 'test',
-      image: 'klakegg/hugo:0.59.1-ext-alpine',
+      image: 'klakegg/hugo:0.69.0-ext-alpine',
       commands: [
         'cd docs/ && hugo-official',
       ],
