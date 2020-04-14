@@ -18,4 +18,4 @@ pytest-cov
 bandit
 requests-mock
 yapf
-pdoc; python_version >= "3.6"
+pdoc3; python_version >= "3.6"
