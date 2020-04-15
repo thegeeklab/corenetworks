@@ -110,4 +110,4 @@ resources/_gen/
 # Misc
 .local/
 .corenetworks*
-docs/api/corenetworks/
+docs/content/api/corenetworks/
