@@ -3,6 +3,9 @@ baseURL: https://corenetworks.geekdocs.de/
 title: corenetworks
 theme: hugo-geekdoc
 
+pygmentsUseClasses: true
+pygmentsCodeFences: true
+
 disablePathToLower: true
 enableGitInfo: true
 
