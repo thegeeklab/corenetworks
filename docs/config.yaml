@@ -2,20 +2,18 @@
 baseURL: https://corenetworks.geekdocs.de/
 title: corenetworks
 theme: hugo-geekdoc
-pygmentsUseClasses: true
-pygmentsCodeFences: true
 
-# Geekdoc configuration
 disablePathToLower: true
 enableGitInfo: true
 
-# Needed for mermaid/katex shortcodes
 markup:
+  defaultMarkdownHandler: goldmark
   goldmark:
     renderer:
       unsafe: true
   tableOfContents:
     startLevel: 1
+    endLevel: 9
 
 params:
   geekdocMenuBundle: true
@@ -29,3 +27,5 @@ params:
 
   geekdocLegalNotice: https://geeklabor.de/legal-notice/#impressum
   geekdocPrivacyPolicy: https://geeklabor.de/legal-notice/#datenschutzerkl%C3%A4rung
+
+  geekdocAnchorLeft: true

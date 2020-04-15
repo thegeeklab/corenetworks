@@ -66,8 +66,10 @@
     returns = show_type_annotations and func.return_annotation() or ''
     if returns:
         returns = ' -> ' + returns
+
+    params = [x.replace("{}", "{ }") for x in func.params(annotate=show_type_annotations)]
 %>
-${h3("`method " + func.name + "(" + ", ".join(func.params(annotate=show_type_annotations)) + ")" + returns + "`")}
+${h3("`method " + func.name + "(" + ", ".join(params) + ")" + returns + "`")}
 
 ${func.docstring | to_markdown}
 </%def>
