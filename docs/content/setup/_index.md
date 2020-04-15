@@ -35,7 +35,13 @@ try:
 
     records = dns.records(zone="example.com")
     print(records)
-    # [{'name': '@', 'ttl': '1800', 'type': 'SOA', 'data': 'ns1.core-networks.de. [...]'}, {'name': 'test', 'ttl': '60', 'type': 'A', 'data': '1.2.3.4'}, {'name': '@', 'ttl': '86400', 'type': 'NS', 'data': 'ns1.core-networks.de.'}, {'name': '@', 'ttl': '86400', 'type': 'NS', 'data': 'ns2.core-networks.eu.'}, {'name': '@', 'ttl': '86400', 'type': 'NS', 'data': 'ns3.core-networks.com.'}]
+    # [
+    #     {'name': '@', 'ttl': '1800', 'type': 'SOA', 'data': 'ns1.core-networks.de. [...]'},
+    #     {'name': 'test', 'ttl': '60', 'type': 'A', 'data': '1.2.3.4'},
+    #     {'name': '@', 'ttl': '86400', 'type': 'NS', 'data': 'ns1.core-networks.de.'},
+    #     {'name': '@', 'ttl': '86400', 'type': 'NS', 'data': 'ns2.core-networks.eu.'},
+    #     {'name': '@', 'ttl': '86400', 'type': 'NS', 'data': 'ns3.core-networks.com.'}
+    # ]
 
     filtered = dns.records(zone="example.com", params={"type": ["A", "AAAA"]})
     print(filtered)
