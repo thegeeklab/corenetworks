@@ -132,8 +132,6 @@ class CoreNetworks():
         """
         Get the list of DNS zones.
 
-        Args: None
-
         Returns:
             list: List of zones.
 
