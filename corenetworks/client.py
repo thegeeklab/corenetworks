@@ -330,7 +330,7 @@ class CoreNetworks():
         if isinstance(result, list):
             return [el for el in result]
         elif isinstance(result, dict):
-            return result
+            return [result]
         else:
             raise CorenetworksError("Unknown type: {}".format(type(result)))
 
