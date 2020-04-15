@@ -61,7 +61,7 @@ def test_zone(requests_mock, client):
     )
 
     resp = client.zone("example.com")
-    assert resp == {"active": True, "dnssec": True, "name": "example.com", "type": "master"}
+    assert resp == [{"active": True, "dnssec": True, "name": "example.com", "type": "master"}]
 
 
 def test_records(requests_mock, client):
@@ -106,7 +106,7 @@ def test_type_records(requests_mock, client):
     )
 
     dictresp = client.records(zone="dict")
-    assert dictresp == {}
+    assert dictresp == [{}]
 
 
 def test_filter_records(requests_mock, client):
