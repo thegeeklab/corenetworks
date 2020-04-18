@@ -62,5 +62,4 @@ setup(
     ],
     install_requires=["six", "jsonschema"],
     dependency_links=[],
-    test_suite="test",
 )
