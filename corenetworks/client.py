@@ -97,9 +97,11 @@ class CoreNetworks():
         }
 
         if self.config["api_token"]:
-            self._auth = CoreNetworksTokenAuth(api_token)
+            self._auth = CoreNetworksTokenAuth(self.config["api_token"])
         else:
-            self._auth = CoreNetworksBasicAuth(user, password, self.__endpoint)
+            self._auth = CoreNetworksBasicAuth(
+                self.config["user"], self.config["password"], self.__endpoint
+            )
 
     @staticmethod
     def _config(user, password, api_token, auto_commit):
