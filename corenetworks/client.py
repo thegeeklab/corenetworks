@@ -202,8 +202,24 @@ class CoreNetworks():
 
         """
         schema = copy.deepcopy(self._schema)
-        schema["required"] = ["name", "type", "data"]
+        schema["required"] = ["name", "type", "data", "ttl"]
         self.__validate(params, schema)
+
+        curr = copy.deepcopy(params)
+        curr.pop("ttl")
+
+        records = self.records(zone, curr)
+        if len(records) > 1:
+            raise CorenetworksError(
+                "More than one record already exists for the given attributes. "
+                "That should be impossible, please open an issue!"
+            )
+
+        # delete existing record with different ttl for a fake update
+        for r in records:
+            r["ttl"] = int(r["ttl"])
+            if r["ttl"] != params["ttl"]:
+                self._delete_record_raw(zone, params=r)
 
         self.__rest_helper(
             "/dnszones/{zone}/records/".format(zone=zone), data=params, method="POST"
@@ -215,6 +231,13 @@ class CoreNetworks():
             self.commit(zone=zone)
 
         return self.__normalize(result)
+
+    def _delete_record_raw(self, zone, params):
+        r = self.__rest_helper(
+            "/dnszones/{zone}/records/delete".format(zone=zone), data=params, method="POST"
+        )
+
+        return r
 
     def delete_record(self, zone, params):
         """
@@ -245,9 +268,7 @@ class CoreNetworks():
         if params.get("force_all"):
             params = {}
 
-        result = self.__rest_helper(
-            "/dnszones/{zone}/records/delete".format(zone=zone), data=params, method="POST"
-        )
+        result = self._delete_record_raw(zone, params)
 
         if self.config["auto_commit"]:
             self.commit(zone=zone)
