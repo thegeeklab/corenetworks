@@ -211,9 +211,16 @@ class CoreNetworks():
 
         records = self.records(zone, params={"name": params["name"]})
         for r in records:
-            if params["type"] == "CNAME" or r["type"] == "CNAME":
+            if params["type"] == "CNAME" and r["type"] != "CNAME":
                 raise CorenetworksError(
                     "A record with the same name already exist ({name}). "
+                    "CNAME records cannot use the same name with other records.".format(
+                        name=r["name"]
+                    )
+                )
+            if params["type"] != "CNAME" and r["type"] == "CNAME":
+                raise CorenetworksError(
+                    "A CNAME record with the same name already exist ({name}). "
                     "CNAME records cannot use the same name with other records.".format(
                         name=r["name"]
                     )

@@ -31,7 +31,11 @@ def records_get_callback(request, context):
     if query_raw:
         query = dict((k.replace("[]", ""), v) for k, v in query_raw.items())
 
-        res = [d for d in records if d["type"].lower() in query["type"]]
+        if query.get("type"):
+            res = [d for d in records if d["type"].lower() in query["type"]]
+        else:
+            res = []
+
         return "{}".format(json.dumps(res))
     else:
         return "{}".format(json.dumps(records))
