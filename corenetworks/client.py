@@ -205,10 +205,23 @@ class CoreNetworks():
         schema["required"] = ["name", "type", "data", "ttl"]
         self.__validate(params, schema)
 
+        if params["type"] == "CNAME":
+            if params["name"] == "@":
+                raise CorenetworksError("CNAME records are not allowed for the zone itself.")
+
+            records = self.records(zone, params={"name": params["name"]})
+            for r in records:
+                raise CorenetworksError(
+                    "A record with the same name already exist ({name}). "
+                    "CNAME records cannot use the same name with other records.".format(
+                        name=r["name"]
+                    )
+                )
+
         curr = copy.deepcopy(params)
         curr.pop("ttl")
-
         records = self.records(zone, curr)
+
         if len(records) > 1:
             raise CorenetworksError(
                 "More than one record already exists for the given attributes. "
