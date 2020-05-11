@@ -60,6 +60,6 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Topic :: Software Development",
     ],
-    install_requires=["six", "jsonschema"],
+    install_requires=["six", "jsonschema", "requests"],
     dependency_links=[],
 )
