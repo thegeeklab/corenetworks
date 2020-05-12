@@ -7,7 +7,10 @@ from corenetworks.authenticators import CoreNetworksTokenAuth
 def test_basic_auth(requests_mock):
     requests_mock.post(
         "https://beta.api.core-networks.de/auth/token",
-        json={"token": "mytoken"},
+        json={
+            "token": "mytoken",
+            "expires": 3600
+        },
     )
 
     auth = CoreNetworksBasicAuth(

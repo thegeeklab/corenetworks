@@ -17,7 +17,7 @@ from corenetworks.test.fixtures.callback import records_post_callback
 
 @pytest.fixture
 def client(mocker):
-    mocker.patch.object(CoreNetworksBasicAuth, "_login", return_value="testtoken")
+    mocker.patch.object(CoreNetworksBasicAuth, "_login", return_value=("testtoken", 3600))
     client = CoreNetworks(user="testuser", password="testpass")
 
     return client
