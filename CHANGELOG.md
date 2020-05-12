@@ -1,2 +1,2 @@
-* BUGFIX
-  * extend the workaround to ensure CNAME records could not mixed with other types using the same name
+* ENHANCEMENT
+  * add `expires` timestamp to the BasicAuth object

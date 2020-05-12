@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Custom authenticators."""
 
+import datetime
 import json
 
 from requests import ConnectionError
@@ -19,7 +20,7 @@ class CoreNetworksBasicAuth(AuthBase):
         self.user = user
         self.password = password
         self.endpoint = endpoint
-        self.token = self._login()
+        self.token, self.expires = self._login()
 
     def __eq__(self, other):  # noqa
         return all([
@@ -60,8 +61,10 @@ class CoreNetworksBasicAuth(AuthBase):
             raise
 
         response = handle.json()
+        token = response["token"]
+        expires = datetime.datetime.now() + datetime.timedelta(seconds=response["expires"])
 
-        return response["token"]
+        return token, expires
 
 
 class CoreNetworksTokenAuth(AuthBase):
