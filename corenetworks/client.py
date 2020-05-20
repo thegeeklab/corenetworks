@@ -225,6 +225,8 @@ class CoreNetworks():
                         name=r["name"]
                     )
                 )
+            if params["type"] == "CNAME" and r["data"] != params["data"]:
+                self._delete_record_raw(zone, params=r)
 
         curr = copy.deepcopy(params)
         curr.pop("ttl")

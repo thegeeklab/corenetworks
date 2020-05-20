@@ -1,2 +1,2 @@
-* ENHANCEMENT
-  * add `expires` timestamp to the BasicAuth object
+* BUGFIX
+  * add fake update action fit CNAME records
