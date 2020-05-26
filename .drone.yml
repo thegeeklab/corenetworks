@@ -220,45 +220,20 @@ steps:
   commands:
   - cd docs/ && hugo-official
 
-- name: freeze
-  image: appleboy/drone-ssh:1.5.5
-  settings:
-    host:
-      from_secret: ssh_host
-    key:
-      from_secret: ssh_key
-    script:
-    - cp -R /var/www/virtual/geeklab/html/corenetworks.geekdocs.de/ /var/www/virtual/geeklab/html/corenetworks_freeze/
-    - ln -sfn /var/www/virtual/geeklab/html/corenetworks_freeze /var/www/virtual/geeklab/corenetworks.geekdocs.de
-    username:
-      from_secret: ssh_username
-
 - name: publish
-  image: appleboy/drone-scp
+  image: plugins/s3-sync
   settings:
-    host:
-      from_secret: ssh_host
-    key:
-      from_secret: ssh_key
-    rm: true
-    source: docs/public/*
-    strip_components: 2
-    target: /var/www/virtual/geeklab/html/corenetworks.geekdocs.de/
-    username:
-      from_secret: ssh_username
-
-- name: cleanup
-  image: appleboy/drone-ssh:1.5.5
-  settings:
-    host:
-      from_secret: ssh_host
-    key:
-      from_secret: ssh_key
-    script:
-    - ln -sfn /var/www/virtual/geeklab/html/corenetworks.geekdocs.de /var/www/virtual/geeklab/corenetworks.geekdocs.de
-    - rm -rf /var/www/virtual/geeklab/html/corenetworks_freeze/
-    username:
-      from_secret: ssh_username
+    access_key:
+      from_secret: s3_access_key
+    bucket: geekdocs
+    delete: true
+    endpoint: https://sp.rknet.org
+    path_style: true
+    secret_key:
+      from_secret: s3_secret_access_key
+    source: docs/public/
+    strip_prefix: docs/public/
+    target: /${DRONE_REPO_NAME}
 
 trigger:
   ref:
@@ -307,6 +282,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 781460b587be9a823d27129d03b5dd9c1ec5db7f72241192e65f226366bff486
+hmac: a5e57ed65ef9a112b5fa6de464f53526a3efc7df88e3bf6cf7ee130450a84017
 
 ...
