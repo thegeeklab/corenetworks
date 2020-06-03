@@ -6,13 +6,17 @@ title: Setup
 
 ## Installation
 
-```python
+<!-- prettier-ignore-start -->
+{{< highlight Python "linenos=table" >}}
 pip install corenetworks
-```
+{{< /highlight >}}
+<!-- prettier-ignore-end -->
 
 ## Example usage
 
-```python
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+{{< highlight Python "linenos=table" >}}
 #!/usr/bin/env python
 
 import requests
@@ -67,5 +71,6 @@ try:
 
 except Exception as e:
     print(str(e))
-
-```
+{{< /highlight >}}
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->

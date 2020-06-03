@@ -31,56 +31,56 @@ platform:
   arch: amd64
 
 steps:
-- name: python27
+- name: python27-pytest
   image: python:2.7
   commands:
   - pip install -r dev-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
   - clone
 
-- name: python35
+- name: python35-pytest
   image: python:3.5
   commands:
   - pip install -r dev-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
   - clone
 
-- name: python36
+- name: python36-pytest
   image: python:3.6
   commands:
   - pip install -r dev-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
   - clone
 
-- name: python37
+- name: python37-pytest
   image: python:3.7
   commands:
   - pip install -r dev-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
   - clone
 
-- name: python38
+- name: python38-pytest
   image: python:3.8
   commands:
   - pip install -r dev-requirements.txt -qq
   - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --no-cov-on-fail
+  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
   environment:
     PY_COLORS: 1
   depends_on:
@@ -215,10 +215,49 @@ steps:
   - pip install -qq .
   - make doc
 
-- name: test
-  image: klakegg/hugo:0.69.0-ext-alpine
+- name: markdownlint
+  image: node:lts-alpine
   commands:
-  - cd docs/ && hugo-official
+  - npm install -g markdownlint-cli
+  - markdownlint 'docs/content/**/*.md' 'README.md' -p .gitignore
+  environment:
+    FORCE_COLOR: true
+    NPM_CONFIG_LOGLEVEL: error
+
+- name: spellcheck
+  image: node:lts-alpine
+  commands:
+  - npm install -g spellchecker-cli
+  - spellchecker --files 'docs/content/**/*.md' 'README.md' -d .dictionary -p spell indefinite-article syntax-urls --no-suggestions
+  environment:
+    FORCE_COLOR: true
+    NPM_CONFIG_LOGLEVEL: error
+
+- name: testbuild
+  image: klakegg/hugo:0.72.0-ext-alpine
+  commands:
+  - hugo-official -s docs/ -b http://localhost/
+
+- name: link-validation
+  image: xoxys/link-validator
+  commands:
+  - link-validator -ro
+  environment:
+    LINK_VALIDATOR_BASE_DIR: docs/public
+
+- name: build
+  image: klakegg/hugo:0.72.0-ext-alpine
+  commands:
+  - hugo-official -s docs/
+
+- name: beautify
+  image: node:lts-alpine
+  commands:
+  - npm install -g js-beautify
+  - html-beautify -r -f 'docs/public/**/*.html'
+  environment:
+    FORCE_COLOR: true
+    NPM_CONFIG_LOGLEVEL: error
 
 - name: publish
   image: plugins/s3-sync
@@ -282,6 +321,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: a5e57ed65ef9a112b5fa6de464f53526a3efc7df88e3bf6cf7ee130450a84017
+hmac: 457331c0185352fd5ff3f72b2ca3d85af12623a5011fe1d9686b27f9a5d8b4c9
 
 ...

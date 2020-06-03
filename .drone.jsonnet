@@ -1,5 +1,5 @@
 local PythonVersion(pyversion='2.7') = {
-  name: 'python' + std.strReplace(pyversion, '.', ''),
+  name: 'python' + std.strReplace(pyversion, '.', '') + '-pytest',
   image: 'python:' + pyversion,
   environment: {
     PY_COLORS: 1,
@@ -7,7 +7,7 @@ local PythonVersion(pyversion='2.7') = {
   commands: [
     'pip install -r dev-requirements.txt -qq',
     'pip install -qq .',
-    'pytest corenetworks --cov=corenetworks --no-cov-on-fail',
+    'pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail',
   ],
   depends_on: [
     'clone',
@@ -192,11 +192,64 @@ local PipelineDocs = {
       ],
     },
     {
-      name: 'test',
-      image: 'klakegg/hugo:0.69.0-ext-alpine',
+      name: 'markdownlint',
+      image: 'node:lts-alpine',
       commands: [
-        'cd docs/ && hugo-official',
+        'npm install -g markdownlint-cli',
+        "markdownlint 'docs/content/**/*.md' 'README.md' -p .gitignore",
       ],
+      environment: {
+        FORCE_COLOR: true,
+        NPM_CONFIG_LOGLEVEL: 'error',
+      },
+    },
+    {
+      name: 'spellcheck',
+      image: 'node:lts-alpine',
+      commands: [
+        'npm install -g spellchecker-cli',
+        "spellchecker --files 'docs/content/**/*.md' 'README.md' -d .dictionary -p spell indefinite-article syntax-urls --no-suggestions",
+      ],
+      environment: {
+        FORCE_COLOR: true,
+        NPM_CONFIG_LOGLEVEL: 'error',
+      },
+    },
+    {
+      name: 'testbuild',
+      image: 'klakegg/hugo:0.72.0-ext-alpine',
+      commands: [
+        'hugo-official -s docs/ -b http://localhost/',
+      ],
+    },
+    {
+      name: 'link-validation',
+      image: 'xoxys/link-validator',
+      commands: [
+        'link-validator -ro',
+      ],
+      environment: {
+        LINK_VALIDATOR_BASE_DIR: 'docs/public',
+      },
+    },
+    {
+      name: 'build',
+      image: 'klakegg/hugo:0.72.0-ext-alpine',
+      commands: [
+        'hugo-official -s docs/',
+      ],
+    },
+    {
+      name: 'beautify',
+      image: 'node:lts-alpine',
+      commands: [
+        'npm install -g js-beautify',
+        "html-beautify -r -f 'docs/public/**/*.html'",
+      ],
+      environment: {
+        FORCE_COLOR: true,
+        NPM_CONFIG_LOGLEVEL: 'error',
+      },
     },
     {
       name: 'publish',
