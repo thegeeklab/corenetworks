@@ -148,6 +148,7 @@ ${function(m)}
 
 ---
 title: ${module.name}
+geekdocRepo: False
 ---
 
 ${module.docstring}
