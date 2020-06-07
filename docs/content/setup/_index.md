@@ -2,20 +2,25 @@
 title: Setup
 ---
 
+<!-- spellchecker-disable -->
 {{< toc >}}
+<!-- spellchecker-enable -->
 
 ## Installation
 
 <!-- prettier-ignore-start -->
+<!-- spellchecker-disable -->
 {{< highlight Python "linenos=table" >}}
 pip install corenetworks
 {{< /highlight >}}
+<!-- spellchecker-enable -->
 <!-- prettier-ignore-end -->
 
 ## Example usage
 
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<!-- spellchecker-disable -->
 {{< highlight Python "linenos=table" >}}
 #!/usr/bin/env python
 
@@ -72,5 +77,6 @@ try:
 except Exception as e:
     print(str(e))
 {{< /highlight >}}
+<!-- spellchecker-enable -->
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
