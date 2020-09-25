@@ -8,7 +8,7 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/thegeeklab/corenetworks)](https://github.com/thegeeklab/corenetworks/graphs/contributors)
 [![License: MIT](https://img.shields.io/github/license/thegeeklab/corenetworks)](https://github.com/thegeeklab/corenetworks/blob/master/LICENSE)
 
-Python library for the [https://core-networks.de](https://beta.api.core-networks.de/doc/) DNS API
+Python library for the [https://core-networks.de](https://beta.api.core-networks.de/doc/) DNS API.
 
 You can find the full documentation at [https://corenetworks.geekdocs.de](https://corenetworks.geekdocs.de/).
 
