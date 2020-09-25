@@ -239,7 +239,7 @@ steps:
   - hugo-official -s docs/ -b http://localhost/
 
 - name: link-validation
-  image: xoxys/link-validator
+  image: thegeeklab/link-validator
   commands:
   - link-validator -ro
   environment:
@@ -321,6 +321,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 00ee28708597fb83f16ba95ef8701c54655c4ddd90fc13061bc88a3ed41dc24f
+hmac: 2b355bfd9ecdfcdc7ba0786f8c48ff9d4382b56340c1d122a7dac6382b052acf
 
 ...

@@ -22,7 +22,7 @@ params:
   geekdocMenuBundle: true
   geekdocToC: 3
 
-  geekdocRepo: https://github.com/xoxys/corenetworks
+  geekdocRepo: https://github.com/thegeeklab/corenetworks
   geekdocEditPath: edit/master/docs/content
 
   geekdocDateFormat: "Jan 2, 2006"

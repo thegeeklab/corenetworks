@@ -224,7 +224,7 @@ local PipelineDocs = {
     },
     {
       name: 'link-validation',
-      image: 'xoxys/link-validator',
+      image: 'thegeeklab/link-validator',
       commands: [
         'link-validator -ro',
       ],

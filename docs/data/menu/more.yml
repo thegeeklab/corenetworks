@@ -1,10 +1,10 @@
 ---
 more:
   - name: Releases
-    ref: "https://github.com/xoxys/corenetworks/releases"
+    ref: "https://github.com/thegeeklab/corenetworks/releases"
     external: true
     icon: "download"
   - name: "View Source"
-    ref: "https://github.com/xoxys/corenetworks"
+    ref: "https://github.com/thegeeklab/corenetworks"
     external: true
     icon: "github"
