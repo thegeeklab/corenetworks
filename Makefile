@@ -14,7 +14,7 @@ doc: doc-assets doc-generate
 .PHONY: doc-assets
 doc-assets:
 	mkdir -p $(THEMEDIR)/$(THEME)/ ; \
-	curl -sSL "https://github.com/xoxys/$(THEME)/releases/$${GEEKDOC_VERSION}/download/$(THEME).tar.gz" | tar -xz -C $(THEMEDIR)/$(THEME)/ --strip-components=1
+	curl -sSL "https://github.com/thegeeklab/$(THEME)/releases/$${GEEKDOC_VERSION}/download/$(THEME).tar.gz" | tar -xz -C $(THEMEDIR)/$(THEME)/ --strip-components=1
 
 .PHONY: doc-generate
 doc-generate:
