@@ -1,4 +1,5 @@
-pydocstyle==5.1.1
+pydocstyle==3.0.0; python_version < "3.5"
+pydocstyle; python_version >= "3.5"
 flake8
 flake8-colors
 flake8-blind-except
