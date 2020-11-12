@@ -265,13 +265,16 @@ local PipelineDocs = {
         strip_prefix: 'docs/public/',
         target: '/${DRONE_REPO_NAME}',
       },
+      when: {
+        ref: ['refs/heads/master', 'refs/tags/**'],
+      },
     },
   ],
   depends_on: [
     'build-package',
   ],
   trigger: {
-    ref: ['refs/heads/master', 'refs/tags/**'],
+    ref: ['refs/heads/master', 'refs/tags/**', 'refs/pull/**'],
   },
 };
 
