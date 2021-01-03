@@ -2,9 +2,11 @@
 title: Setup
 ---
 
+<!-- prettier-ignore-start -->
 <!-- spellchecker-disable -->
 {{< toc >}}
 <!-- spellchecker-enable -->
+<!-- prettier-ignore-end -->
 
 ## Installation
 
