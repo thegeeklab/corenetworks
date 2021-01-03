@@ -7,12 +7,23 @@ platform:
   arch: amd64
 
 steps:
-- name: flake8
-  image: python:3.8
+- name: yapf
+  image: python:3.9
   commands:
-  - pip install -r dev-requirements.txt -qq
-  - pip install -qq .
-  - flake8 ./corenetworks
+  - git fetch -tq
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry install -q
+  - poetry run yapf -dr ./corenetworks
+  environment:
+    PY_COLORS: 1
+
+- name: flake8
+  image: python:3.9
+  commands:
+  - git fetch -tq
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry install -q
+  - poetry run flake8 ./corenetworks
   environment:
     PY_COLORS: 1
 
@@ -34,63 +45,56 @@ platform:
   arch: amd64
 
 steps:
-- name: python27-pytest
-  image: python:2.7
-  commands:
-  - pip install -r dev-requirements.txt -qq
-  - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
-  environment:
-    PY_COLORS: 1
-  depends_on:
-  - clone
-
-- name: python35-pytest
-  image: python:3.5
-  commands:
-  - pip install -r dev-requirements.txt -qq
-  - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
-  environment:
-    PY_COLORS: 1
-  depends_on:
-  - clone
-
 - name: python36-pytest
   image: python:3.6
   commands:
-  - pip install -r dev-requirements.txt -qq
-  - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry install -q
+  - poetry run pytest
+  - poetry version
   environment:
     PY_COLORS: 1
   depends_on:
-  - clone
+  - fetch
 
 - name: python37-pytest
   image: python:3.7
   commands:
-  - pip install -r dev-requirements.txt -qq
-  - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry install -q
+  - poetry run pytest
+  - poetry version
   environment:
     PY_COLORS: 1
   depends_on:
-  - clone
+  - fetch
 
 - name: python38-pytest
   image: python:3.8
   commands:
-  - pip install -r dev-requirements.txt -qq
-  - pip install -qq .
-  - pytest corenetworks --cov=corenetworks --cov-append --no-cov-on-fail
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry install -q
+  - poetry run pytest
+  - poetry version
   environment:
     PY_COLORS: 1
   depends_on:
-  - clone
+  - fetch
+
+- name: python39-pytest
+  image: python:3.9
+  commands:
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry install -q
+  - poetry run pytest
+  - poetry version
+  environment:
+    PY_COLORS: 1
+  depends_on:
+  - fetch
 
 - name: codecov
-  image: python:3.8
+  image: python:3.9
   commands:
   - pip install codecov -qq
   - codecov --required -X gcov
@@ -99,11 +103,10 @@ steps:
       from_secret: codecov_token
     PY_COLORS: 1
   depends_on:
-  - python27-pytest
-  - python35-pytest
   - python36-pytest
   - python37-pytest
   - python38-pytest
+  - python39-pytest
 
 image_pull_secrets:
 - docker_config
@@ -127,11 +130,12 @@ platform:
 
 steps:
 - name: bandit
-  image: python:3.8
+  image: python:3.9
   commands:
-  - pip install -r dev-requirements.txt -qq
-  - pip install -qq .
-  - bandit -r ./corenetworks -x ./corenetworks/test
+  - git fetch -tq
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry install -q
+  - poetry run bandit -r ./corenetworks -x ./corenetworks/test
   environment:
     PY_COLORS: 1
 
@@ -157,9 +161,11 @@ platform:
 
 steps:
 - name: build
-  image: python:3.8
+  image: python:3.9
   commands:
-  - python setup.py sdist bdist_wheel
+  - git fetch -tq
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry build
   environment:
     SETUPTOOLS_SCM_PRETEND_VERSION: ${DRONE_TAG##v}
 
@@ -184,13 +190,15 @@ steps:
     - refs/tags/**
 
 - name: publish-pypi
-  image: plugins/pypi
-  settings:
-    password:
+  image: python:3.9
+  commands:
+  - git fetch -tq
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry publish -n
+  environment:
+    POETRY_HTTP_BASIC_PYPI_PASSWORD:
       from_secret: pypi_password
-    repository: https://upload.pypi.org/legacy/
-    skip_build: true
-    username:
+    POETRY_HTTP_BASIC_PYPI_USERNAME:
       from_secret: pypi_username
   when:
     ref:
@@ -221,10 +229,11 @@ concurrency:
 
 steps:
 - name: generate
-  image: python:3.8
+  image: python:3.9
   commands:
-  - pip install -r dev-requirements.txt -qq
-  - pip install -qq .
+  - git fetch -tq
+  - pip install poetry poetry-dynamic-versioning -qq
+  - poetry install
   - make doc
 
 - name: markdownlint
@@ -344,6 +353,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 36e94ce280e52e18c290f7ee728d68f2353570df5e5327f649668af22f0005ea
+hmac: f27fd5aca151357587bd0138a4dcef552f90278cab5557e8887f87622f6e7f31
 
 ...
