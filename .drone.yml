@@ -32,7 +32,7 @@ image_pull_secrets:
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -118,7 +118,7 @@ image_pull_secrets:
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -149,7 +149,7 @@ image_pull_secrets:
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -214,7 +214,7 @@ image_pull_secrets:
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -301,7 +301,7 @@ steps:
     target: /${DRONE_REPO_NAME}
   when:
     ref:
-    - refs/heads/master
+    - refs/heads/main
     - refs/tags/**
 
 image_pull_secrets:
@@ -309,7 +309,7 @@ image_pull_secrets:
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   - refs/pull/**
 
@@ -347,7 +347,7 @@ image_pull_secrets:
 
 trigger:
   ref:
-  - refs/heads/master
+  - refs/heads/main
   - refs/tags/**
   status:
   - success
@@ -358,6 +358,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: 1b2b0228687be4880c17d183c54b83a4d1a4d1adc1f3d6c4c92d180cecdaffbb
+hmac: 03108e79da796974a91f9af64a24f4129005357b41a1e280be964ee884f3a085
 
 ...
