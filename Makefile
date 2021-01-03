@@ -18,7 +18,7 @@ doc-assets:
 	curl -sSL "https://github.com/thegeeklab/$(THEME)/releases/download/${THEME_VERSION}/$(THEME).tar.gz" | tar -xz -C $(THEMEDIR)/$(THEME)/ --strip-components=1
 .PHONY: doc-generate
 doc-generate:
-	pdoc --template-dir $(BASEDIR)/templates/ -o $(APIDIR) --force \
+	poetry run pdoc --template-dir $(BASEDIR)/templates/ -o $(APIDIR) --force \
 		$(PACKAGE).authenticators \
 		$(PACKAGE).client \
 		$(PACKAGE).exceptions
