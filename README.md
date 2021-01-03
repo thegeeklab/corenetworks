@@ -14,7 +14,8 @@ You can find the full documentation at [https://corenetworks.geekdocs.de](https:
 
 ## Contributors
 
-Special thanks goes to all [contributors](https://github.com/thegeeklab/corenetworks/graphs/contributors).
+Special thanks goes to all [contributors](https://github.com/thegeeklab/corenetworks/graphs/contributors). If you would like to contribute,
+please see the [instructions](https://github.com/thegeeklab/corenetworks/blob/main/CONTRIBUTING.md).
 
 ## License
 
