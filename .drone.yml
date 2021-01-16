@@ -27,9 +27,6 @@ steps:
   environment:
     PY_COLORS: 1
 
-image_pull_secrets:
-- docker_config
-
 trigger:
   ref:
   - refs/heads/main
@@ -113,9 +110,6 @@ steps:
   - python38-pytest
   - python39-pytest
 
-image_pull_secrets:
-- docker_config
-
 trigger:
   ref:
   - refs/heads/main
@@ -143,9 +137,6 @@ steps:
   - poetry run bandit -r ./corenetworks -x ./corenetworks/test
   environment:
     PY_COLORS: 1
-
-image_pull_secrets:
-- docker_config
 
 trigger:
   ref:
@@ -208,9 +199,6 @@ steps:
   when:
     ref:
     - refs/tags/**
-
-image_pull_secrets:
-- docker_config
 
 trigger:
   ref:
@@ -300,9 +288,6 @@ steps:
     - refs/heads/main
     - refs/tags/**
 
-image_pull_secrets:
-- docker_config
-
 trigger:
   ref:
   - refs/heads/main
@@ -338,9 +323,6 @@ steps:
     - success
     - failure
 
-image_pull_secrets:
-- docker_config
-
 trigger:
   ref:
   - refs/heads/main
@@ -354,6 +336,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: fc609e2b288f496650963d3d06ac95c2be7e63e959e421e7123f76df0c7fb368
+hmac: fca915a287fa658c8bab5a647308b977ce6d003983709156e0d0bbb763f60cc0
 
 ...

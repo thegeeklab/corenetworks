@@ -17,7 +17,6 @@ local PythonVersion(pyversion='3.6') = {
 
 local PipelineLint = {
   kind: 'pipeline',
-  image_pull_secrets: ['docker_config'],
   name: 'lint',
   platform: {
     os: 'linux',
@@ -58,7 +57,6 @@ local PipelineLint = {
 
 local PipelineTest = {
   kind: 'pipeline',
-  image_pull_secrets: ['docker_config'],
   name: 'test',
   platform: {
     os: 'linux',
@@ -105,7 +103,6 @@ local PipelineTest = {
 
 local PipelineSecurity = {
   kind: 'pipeline',
-  image_pull_secrets: ['docker_config'],
   name: 'security',
   platform: {
     os: 'linux',
@@ -136,7 +133,6 @@ local PipelineSecurity = {
 
 local PipelineBuildPackage = {
   kind: 'pipeline',
-  image_pull_secrets: ['docker_config'],
   name: 'build-package',
   platform: {
     os: 'linux',
@@ -203,7 +199,6 @@ local PipelineBuildPackage = {
 
 local PipelineDocs = {
   kind: 'pipeline',
-  image_pull_secrets: ['docker_config'],
   name: 'docs',
   platform: {
     os: 'linux',
@@ -307,7 +302,6 @@ local PipelineDocs = {
 
 local PipelineNotifications = {
   kind: 'pipeline',
-  image_pull_secrets: ['docker_config'],
   name: 'notifications',
   platform: {
     os: 'linux',
