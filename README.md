@@ -1,6 +1,6 @@
 # corenetworks
 
-[![Build Status](https://img.shields.io/drone/build/thegeeklab/corenetworks?logo=drone)](https://drone.thegeeklab.de/thegeeklab/corenetworks)
+[![Build Status](https://img.shields.io/drone/build/thegeeklab/corenetworks?logo=drone&server=https%3A%2F%2Fdrone.thegeeklab.de)](https://drone.thegeeklab.de/thegeeklab/corenetworks)
 [![Python Version](https://img.shields.io/pypi/pyversions/corenetworks.svg)](https://pypi.org/project/corenetworks/)
 [![PyPI Status](https://img.shields.io/pypi/status/corenetworks.svg)](https://pypi.org/project/corenetworks/)
 [![PyPI Release](https://img.shields.io/pypi/v/corenetworks.svg)](https://pypi.org/project/corenetworks/)
