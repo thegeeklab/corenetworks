@@ -12,7 +12,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run yapf -dr ./corenetworks
   environment:
     PY_COLORS: 1
@@ -22,7 +22,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run flake8 ./corenetworks
   environment:
     PY_COLORS: 1
@@ -51,7 +51,7 @@ steps:
   image: python:3.6
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run pytest
   - poetry version
   environment:
@@ -63,7 +63,7 @@ steps:
   image: python:3.7
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run pytest
   - poetry version
   environment:
@@ -75,7 +75,7 @@ steps:
   image: python:3.8
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run pytest
   - poetry version
   environment:
@@ -87,7 +87,7 @@ steps:
   image: python:3.9
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run pytest
   - poetry version
   environment:
@@ -133,7 +133,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
-  - poetry install -q
+  - poetry install
   - poetry run bandit -r ./corenetworks -x ./corenetworks/test
   environment:
     PY_COLORS: 1
@@ -336,6 +336,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: fca915a287fa658c8bab5a647308b977ce6d003983709156e0d0bbb763f60cc0
+hmac: dc439b1215d4664d96d9ecaf5a2bbc73ffd033954747764940092b3520393dca
 
 ...
