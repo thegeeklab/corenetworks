@@ -12,6 +12,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run yapf -dr ./corenetworks
   environment:
@@ -22,6 +23,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run flake8 ./corenetworks
   environment:
@@ -51,6 +53,7 @@ steps:
   image: python:3.6
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run pytest
   - poetry version
@@ -63,6 +66,7 @@ steps:
   image: python:3.7
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run pytest
   - poetry version
@@ -75,6 +79,7 @@ steps:
   image: python:3.8
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run pytest
   - poetry version
@@ -87,6 +92,7 @@ steps:
   image: python:3.9
   commands:
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run pytest
   - poetry version
@@ -133,6 +139,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - poetry run bandit -r ./corenetworks -x ./corenetworks/test
   environment:
@@ -226,6 +233,7 @@ steps:
   commands:
   - git fetch -tq
   - pip install poetry poetry-dynamic-versioning -qq
+  - poetry config experimental.new-installer false
   - poetry install
   - make doc
 
@@ -336,6 +344,6 @@ depends_on:
 
 ---
 kind: signature
-hmac: dc439b1215d4664d96d9ecaf5a2bbc73ffd033954747764940092b3520393dca
+hmac: 18dfddcae247d4316e27cedf260d08fb2e3bef8a91f9bbd8db1d43a897299a88
 
 ...
