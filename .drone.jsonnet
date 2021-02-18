@@ -33,6 +33,7 @@ local PipelineLint = {
       commands: [
         'git fetch -tq',
         'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry config experimental.new-installer false',
         'poetry install',
         'poetry run yapf -dr ./corenetworks',
       ],
@@ -46,6 +47,7 @@ local PipelineLint = {
       commands: [
         'git fetch -tq',
         'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry config experimental.new-installer false',
         'poetry install',
         'poetry run flake8 ./corenetworks',
       ],
@@ -119,6 +121,7 @@ local PipelineSecurity = {
       commands: [
         'git fetch -tq',
         'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry config experimental.new-installer false',
         'poetry install',
         'poetry run bandit -r ./corenetworks -x ./corenetworks/test',
       ],
@@ -215,6 +218,7 @@ local PipelineDocs = {
       commands: [
         'git fetch -tq',
         'pip install poetry poetry-dynamic-versioning -qq',
+        'poetry config experimental.new-installer false',
         'poetry install',
         'make doc',
       ],
